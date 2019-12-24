@@ -15,17 +15,14 @@ int countDelay = 1000;
 unsigned long lastTime = 0;
 int countDirection = 1;
 
-// the setup function runs once when you press reset or power the board
 void setup() {
-  Serial.begin(9600); // open the serial port at 9600 bps
   pinMode(DIGIT_SELECT_PIN, OUTPUT);
 }
 
-// the loop function runs over and over again forever
 void loop() {  
   int temp;  
 
-  // set count delay
+  // set count delay and direction
   countDirection = 1;
   temp = map(analogRead(COUNT_DELAY_PIN), 0, 1023, -2900, 2900);
   countDelay = 3000 - abs(temp);
@@ -44,8 +41,6 @@ void loop() {
     if (counter < 0) {
       counter = 99;
     }
-    Serial.print("counter: ");
-    Serial.println(counter);
   }
 
   // display 1's digit
@@ -53,6 +48,6 @@ void loop() {
   display.show(counter%10);
 
   // display 10's digit
-  // digitalWrite(DIGIT_SELECT_PIN, 1);
-  // display.show(counter/10);
+  digitalWrite(DIGIT_SELECT_PIN, 1);
+  display.show(counter/10);
 }
